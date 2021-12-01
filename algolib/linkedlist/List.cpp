@@ -7,12 +7,14 @@ List<T>::List()
 {
     first = NULL;
     last = NULL;
+    size = 0;
 }
 
 template <class T>
 Lnode<T> *List<T>::add(T data)
 {
     Lnode<T> *p = new Lnode<T>();
+    size++;
     p->data = data;
 
     if (last == NULL)
@@ -44,6 +46,7 @@ Lnode<T> *List<T>::insert(T data)
     {
         Lnode<T> *prev = find_prev(data);
         node = new Lnode<T>();
+        size++;
         node->data = data;
         if (prev != NULL)
         {
@@ -109,7 +112,7 @@ void List<T>::remove(Lnode<T> *node)
         else
             prev->next = node->next;
     }
-
+    size--;
     delete node;
 }
 
@@ -131,4 +134,10 @@ void List<T>::print()
         node = node->next;
     }
     std::cout << std::endl;
+}
+
+template <class T>
+int List<T>::get_size()
+{
+    return size;
 }

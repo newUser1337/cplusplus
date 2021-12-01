@@ -15,10 +15,10 @@ class List
 private:
     Lnode<T> *first;
     Lnode<T> *last;
-
+    int size;
 public:
     List();
-    int empty();
+    int get_size();
     Lnode<T> *add(T);
     Lnode<T> *find(T);
     Lnode<T> *insert(T);

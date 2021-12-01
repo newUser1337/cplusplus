@@ -14,6 +14,7 @@ int main()
     list1.add(10);
     list1.print();
 
+    std::cout << list1.get_size() << std::endl;
 
     list1.remove(5);
     list1.remove(10);
@@ -22,6 +23,7 @@ int main()
     list1.remove(8);
     list1.remove(9);
     list1.add(10);
-    list1.print();  
-
+    list1.print();
+    list1.remove(10);
+    std::cout << list1.get_size() << std::endl;
 }
