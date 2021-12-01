@@ -1,29 +1,15 @@
-#include <iostream>
 #include "List.h"
 #include "List.cpp"
 
 int main()
 {
-    List<int> list1;
-
-    list1.add(5);
-    list1.add(6);
-    list1.add(7);
-    list1.add(8);
-    list1.add(9);
-    list1.add(10);
-    list1.print();
-
-    std::cout << list1.get_size() << std::endl;
-
-    list1.remove(5);
-    list1.remove(10);
-    list1.remove(6);
-    list1.remove(7);
-    list1.remove(8);
-    list1.remove(9);
-    list1.add(10);
-    list1.print();
-    list1.remove(10);
-    std::cout << list1.get_size() << std::endl;
+    LinkedList<int> L;
+    int arra[10] = {1, 3, 5, 7, 9, 2, 4, 6, 8, 0};
+    for (int i = 0; i < 10; i++)
+        L.InsertAfter(arra[i]);
+    L.PrintList();
+    int m =123;
+    L.InsertAt(m);
+    L.PrintList();
+    return 0;
 }

@@ -1,32 +1,60 @@
 #ifndef __LIST_CPP__
 #define __LIST_CPP__
 
+#include <cstdlib>
+
 template <class T>
-class Lnode
+class Node
 {
+private:
+    Node<T> *next;
+
 public:
     T data;
-    Lnode<T> *next;
+    Node(const T &item, Node<T> *ptrnext = NULL);
+    void InsertAfter(Node<T> *p);
+    Node<T> *DeleteAfter();
+    Node<T> *NextNode() const;
 };
 
 template <class T>
-class List
+class LinkedList
 {
 private:
-    Lnode<T> *first;
-    Lnode<T> *last;
+    Node<T> *front, *rear;
+    Node<T> *prevPtr, *currPtr;
     int size;
+    int position;
+    Node<T> *GetNode(const T &item, Node<T> *ptrNext);
+    void FreeNode(Node<T> *p);
+    void CopyList(const LinkedList<T> &L); //
+
 public:
-    List();
-    int get_size();
-    Lnode<T> *add(T);
-    Lnode<T> *find(T);
-    Lnode<T> *insert(T);
-    Lnode<T> *find_prev(T);
-    Lnode<T> *find_prev(Lnode<T> *);
-    void remove(Lnode<T> *);
-    void remove(T);
-    void print();
+    LinkedList(); //
+    LinkedList(const LinkedList<T> &L);
+    ~LinkedList();
+    LinkedList<T> &operator=(const LinkedList<T> &L);
+    int ListSize() const; //
+    int ListEmpty() const;
+
+    void Reset(int pos = 0);     //
+    void Next();                 //
+    int EndOfList() const;       //
+    int CurrentPosition() const; //
+
+    void InsertFront(const T &item); //
+    void InsertRear(const T &item);  //
+    void InsertAt(const T &item);    //
+    void InsertAfter(const T &item); //
+
+    void DeleteFront(); //
+    void DeleteAt();    //
+
+    T &Data(); //
+
+    void ClearList(); //
+
+    void PrintList();
 };
 
 #endif
