@@ -1,15 +1,21 @@
-#include "List.h"
-#include "List.cpp"
+// #include "../iterable/Iterable.h"
+#include "LinkedList.h"
+#include "LinkedList.cpp"
 
 int main()
 {
-    LinkedList<int> L;
-    int arra[10] = {1, 3, 5, 7, 9, 2, 4, 6, 8, 0};
+    LinkedList<int> l1;
     for (int i = 0; i < 10; i++)
-        L.InsertAfter(arra[i]);
-    L.PrintList();
-    int m =123;
-    L.InsertAt(m);
-    L.PrintList();
+        l1.InsertAfter(i + 100);
+    l1.PrintList();
+    std::cout << std::endl;
+    
+    l1.Reset(-1);
+    while (l1.HasNext())
+    {
+        l1.Next();
+        std::cout << l1.Data() << std::endl;
+    }
+
     return 0;
 }

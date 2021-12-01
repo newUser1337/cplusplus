@@ -2,6 +2,7 @@
 #define __LIST_CPP__
 
 #include <cstdlib>
+#include "../iterable/Iterable.h"
 
 template <class T>
 class Node
@@ -18,7 +19,7 @@ public:
 };
 
 template <class T>
-class LinkedList
+class LinkedList : public Iterable<T>
 {
 private:
     Node<T> *front, *rear;
@@ -37,7 +38,7 @@ public:
     int ListSize() const; //
     int ListEmpty() const;
 
-    void Reset(int pos = 0);     //
+    void Reset(int pos = -1);     //
     void Next();                 //
     int EndOfList() const;       //
     int CurrentPosition() const; //
@@ -55,6 +56,8 @@ public:
     void ClearList(); //
 
     void PrintList();
+
+    bool HasNext();
 };
 
 #endif

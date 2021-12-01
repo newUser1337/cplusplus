@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstdlib>
-#include "List.h"
+#include "LinkedList.h"
 
 template <class T>
 Node<T>::Node(const T &item, Node<T> *ptrnext) : data(item), next(ptrnext)
@@ -235,17 +235,17 @@ void LinkedList<T>::Reset(int pos)
     if (front == NULL)
         return;
 
-    if (pos < 0 || pos > size - 1)
+    if (pos < -1 || pos > size - 1)
     {
         std::cerr << "Reset: incorrect position" << pos << std::endl;
         return;
     }
 
-    if (pos == 0)
+    if (pos == -1)
     {
         prevPtr = NULL;
-        currPtr = front;
-        position = 0;
+        currPtr = NULL;
+        position = -1;
     }
     else
     {
@@ -263,12 +263,25 @@ void LinkedList<T>::Reset(int pos)
 template <class T>
 void LinkedList<T>::Next()
 {
-    if (currPtr != NULL)
+    if (position == -1)
+    {
+        currPtr = front;
+        position++;
+    }
+    else if (currPtr != NULL)
     {
         prevPtr = currPtr;
         currPtr = currPtr->NextNode();
         position++;
     }
+}
+template <class T>
+bool LinkedList<T>::HasNext()
+{
+    if (size == 0)
+        return false;
+
+    return position + 1 < size ? true : false;
 }
 
 template <class T>
@@ -299,7 +312,7 @@ void LinkedList<T>::InsertAt(const T &item)
     if (prevPtr == rear)
     {
         rear = newNode;
-        position = size;
+        // position = size;
     }
 
     currPtr = newNode;
@@ -357,7 +370,7 @@ void LinkedList<T>::DeleteAt()
     if (p == rear)
     {
         rear = prevPtr;
-        position--;
+        // position--;
     }
 
     currPtr = p->NextNode();
