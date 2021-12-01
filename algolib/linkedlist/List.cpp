@@ -5,38 +5,130 @@
 template <class T>
 List<T>::List()
 {
-    sentiel = new Lnode<T>();
-    sentiel->next = sentiel;
+    first = NULL;
+    last = NULL;
 }
 
 template <class T>
-void List<T>::add(T data)
+Lnode<T> *List<T>::add(T data)
 {
-    Lnode<T> *p;
-
-    p = new Lnode<T>();
+    Lnode<T> *p = new Lnode<T>();
     p->data = data;
-    p->next = sentiel->next;
-    sentiel->next = p;
+
+    if (last == NULL)
+    {
+        first = p;
+    }
+    else
+        last->next = p;
+    last = p;
+
+    return p;
 }
 
 template <class T>
-T List<T>::remove()
+Lnode<T> *List<T>::find(T data)
 {
-    T data;
-    Lnode<T> *node;
+    Lnode<T> *node = first;
+    while (node != NULL && node->data != data)
+        node = node->next;
 
-    if (sentiel->next == sentiel)
+    return node;
+}
+
+template <class T>
+Lnode<T> *List<T>::insert(T data)
+{
+    Lnode<T> *node = find(data);
+    if (node == NULL)
     {
-        std::cerr << "ERROR: 'remove' called with empty list.\n";
-        exit(1);
+        Lnode<T> *prev = find_prev(data);
+        node = new Lnode<T>();
+        node->data = data;
+        if (prev != NULL)
+        {
+            node->next = prev->next;
+            prev->next = node;
+        }
+        else
+        {
+            node->next = first;
+            first = node;
+        }
+        if (node->next == NULL)
+            last = node;
     }
 
-    node = sentiel->next;
-    data = node->data;
+    return node;
+}
 
-    sentiel->next = node->next;
+template <class T>
+Lnode<T> *List<T>::find_prev(T data)
+{
+    Lnode<T> *res = NULL, *node = first;
+    while (node != NULL && data >= node->data)
+    {
+        res = node;
+        node = node->next;
+    }
+
+    return res;
+}
+
+template <class T>
+Lnode<T> *List<T>::find_prev(Lnode<T> *fnode)
+{
+    Lnode<T> *node = first;
+
+    if (fnode == node)
+        return NULL;
+    while (node != NULL && node->next != fnode)
+        node = node->next;
+
+    return node;
+}
+
+template <class T>
+void List<T>::remove(Lnode<T> *node)
+{
+    Lnode<T> *prev;
+    if (first == node)
+    {
+        first = prev->next;
+        if (last == node)
+            last = prev->next;
+    }
+    else
+    {
+        prev = find_prev(node);
+        if (node->next == NULL)
+        {
+            last = prev;
+            prev->next = NULL;
+        }
+        else
+            prev->next = node->next;
+    }
+
     delete node;
+}
 
-    return data;
+template <class T>
+void List<T>::remove(T data)
+{
+    Lnode<T> *node = find(data);
+    if (node != NULL)
+        remove(node);
+}
+
+template <class T>
+void List<T>::print()
+{
+    Lnode<T> *node = first;
+    while (node != NULL)
+    {
+        std::cout << ' ' << node->data;
+        node = node->next;
+    }
+    std::cout << std::endl;
 }
