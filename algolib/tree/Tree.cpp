@@ -232,20 +232,19 @@ void Tree<T>::Next()
 template <class T>
 void Tree<T>::NextRec()
 {
-
     if (currNode == NULL)
         currNode = root;
     else
     {
-        if (prevNode == currNode->GetRight() && prevNode != NULL)
+        TNode<T> *temp = prevNode;
+        prevNode = currNode;
+        if (temp == currNode->GetRight() && temp != NULL)
         {
-            prevNode = currNode;
             currNode = currNode->GetParent();
             NextRec();
         }
-        else if (prevNode == currNode->GetLeft() && prevNode != NULL)
+        else if (temp == currNode->GetLeft() && temp != NULL)
         {
-            prevNode = currNode;
             if (currNode->GetRight() != NULL)
                 currNode = currNode->GetRight();
             else
@@ -254,9 +253,8 @@ void Tree<T>::NextRec()
                 NextRec();
             }
         }
-        else if (prevNode == currNode->GetParent() || prevNode == NULL)
+        else if (temp == currNode->GetParent() || temp == NULL)
         {
-            prevNode = currNode;
             if (currNode->GetLeft() != NULL)
                 currNode = currNode->GetLeft();
             else if (currNode->GetRight() != NULL)
