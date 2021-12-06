@@ -157,31 +157,22 @@ void Tree<T>::Remove(const T &data)
             (r_node->GetParent())->SetRightNode(r_node->GetLeft());
     }
 
-    if (r_node == NULL)
-        if (del_node == root)
-            root = r_node;
-        else
-        {
-            if (del_node->GetData() < del_node->GetParent()->GetData())
-                del_node->GetParent()->SetLeftNode(NULL);
-            else
-                del_node->GetParent()->SetRightNode(NULL);
-        }
-    else
+    if (r_node != NULL)
     {
         if (r_node != del_node->GetLeft())
             r_node->SetLeftNode(del_node->GetLeft());
         if (r_node != del_node->GetRight())
             r_node->SetRightNode(del_node->GetRight());
-        if (del_node->GetParent() != NULL)
-        {
-            if (del_node->GetData() < (del_node->GetParent())->GetData())
-                (del_node->GetParent())->SetLeftNode(r_node);
-            else
-                (del_node->GetParent())->SetRightNode(r_node);
-        }
+    }
+
+    if (del_node == root)
+        root = r_node;
+    else
+    {
+        if (del_node->GetData() < del_node->GetParent()->GetData())
+            del_node->GetParent()->SetLeftNode(NULL);
         else
-            root = r_node;
+            del_node->GetParent()->SetRightNode(NULL);
     }
 
     size--;

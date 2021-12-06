@@ -5,29 +5,29 @@
 #include "../iterable/Iterable.h"
 
 template <class T>
-class Node
+class LNode
 {
 private:
-    Node<T> *next;
+    LNode<T> *next;
 
 public:
     T data;
-    Node(const T &item, Node<T> *ptrnext = NULL);
-    void InsertAfter(Node<T> *p);
-    Node<T> *DeleteAfter();
-    Node<T> *NextNode() const;
+    LNode(const T &item, LNode<T> *ptrnext = NULL);
+    void InsertAfter(LNode<T> *p);
+    LNode<T> *DeleteAfter();
+    LNode<T> *NextNode() const;
 };
 
 template <class T>
 class LinkedList : public Iterable<T>
 {
 private:
-    Node<T> *front, *rear;
-    Node<T> *prevPtr, *currPtr;
+    LNode<T> *front, *rear;
+    LNode<T> *prevPtr, *currPtr;
     int size;
     int position;
-    Node<T> *GetNode(const T &item, Node<T> *ptrNext);
-    void FreeNode(Node<T> *p);
+    LNode<T> *GetNode(const T &item, LNode<T> *ptrNext);
+    void FreeNode(LNode<T> *p);
     void CopyList(const LinkedList<T> &L); //
 
 public:

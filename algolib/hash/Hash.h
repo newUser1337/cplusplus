@@ -6,7 +6,7 @@
 template <class K, class T>
 class Hash : public Iterable<T>
 {
-    struct Node
+    struct HNode
     {
         K key;
         T data;
@@ -15,9 +15,9 @@ class Hash : public Iterable<T>
 private:
     int modsize;
     int size;
-    Node *array;
+    HNode *array;
     void Realloc();
-    void Rehash(Node *,  Node *, int);
+    void Rehash(HNode *,  HNode *, int);
     int Hashvalue(K);
     int GetNewModsize(int);
     int position;
