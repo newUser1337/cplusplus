@@ -9,9 +9,9 @@ int cmp_ch(void *, void *);
 int main()
 {
     List *list = list_init(cmp_ch, print_ch);
-    list_insert(list, "New-York");
+    list_insert(list, "1");
     // list_insert(list, "Spb");
-    list_insert(list, "Moscow");
+    list_insert(list, "3");
     // list_insert(list, "New-York");
     // list_insert(list, "Moscow");
 
@@ -19,7 +19,7 @@ int main()
     // list_remove(list, "New-York");
     // list_remove(list, "Moscow");
     list_print(list);
-    list_insert(list, "Spb");
+    list_insert(list, "2");
     list_print(list);
 
     list_destr(&list);

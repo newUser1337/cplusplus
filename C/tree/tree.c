@@ -188,10 +188,10 @@ TNode *_tree_find_rec(Tree *tree, TNode *node, void *data)
         r_node = node;
     else
     {
-        if (cmp > 0)
-            r_node = _tree_find_rec(tree, node->right, data);
-        else
+        if (cmp < 0)
             r_node = _tree_find_rec(tree, node->left, data);
+        else
+            r_node = _tree_find_rec(tree, node->right, data);
     }
 
     return r_node;
