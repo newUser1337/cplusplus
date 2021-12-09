@@ -28,6 +28,13 @@ int main()
     graph_dfs(gr, 3);
     graph_bfs(gr, 3);
     graph_dfs_rec(gr, 3);
+
+    if (graph_cycle(gr, 3))
+        printf("true\n");
+    else
+        printf("flase\n");
+
+    graph_destr(&gr);
     return 0;
 }
 
