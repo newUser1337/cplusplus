@@ -36,7 +36,7 @@ int main()
     graph_connect(graph, 3, 4);
     graph_connect(graph, 5, 6);
     graph_connect(graph, 5, 4);
-    graph_connect(graph, 5, 8);  
+    graph_connect(graph, 5, 8);   
     graph_connect(graph, 11, 10);
     graph_connect(graph, 9, 10);
     // graph_print(graph);
