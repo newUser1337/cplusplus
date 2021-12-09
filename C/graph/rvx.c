@@ -32,7 +32,7 @@ int main()
     graph_connect(graph, 2, 3);
     graph_connect(graph, 2, 4);
     graph_connect(graph, 1, 7);
-    graph_connect(graph, 3, 6);
+    graph_connect(graph, 3, 6); 
     graph_connect(graph, 3, 4);
     graph_connect(graph, 5, 6);
     graph_connect(graph, 5, 4);
