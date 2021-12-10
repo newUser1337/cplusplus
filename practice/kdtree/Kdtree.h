@@ -1,7 +1,6 @@
 #ifndef __KDTREE_CPP__
 #define __KDTREE_CPP__
 
-
 template <class T>
 class KDNode
 {
@@ -9,17 +8,24 @@ private:
     KDNode<T> *parent;
     KDNode<T> *left;
     KDNode<T> *right;
-    T data;
+    T *data;
+    int K;
 
 public:
-    KDNode(const T &);
+    KDNode(T *, int);
     KDNode<T> *GetParent();
     KDNode<T> *GetLeft();
     KDNode<T> *GetRight();
-    void SetParent(const KDNode<T> *);
-    void SetLeft(const KDNode<T> *);
-    void SetRight(const KDNode<T> *);
-    T &GetData();
+    int GetDim();
+    void SetParent(KDNode<T> *);
+    void SetLeft(KDNode<T> *);
+    void SetRight(KDNode<T> *);
+    T *GetData();
+    T GetDist(T *, int);
+    T GetProj(T *, int);
+
+    template <T>
+    friend std::ostream &operator<<(std::ostream &, KDNode<T> &);
 };
 
 template <class T>
@@ -27,10 +33,28 @@ class KDTree
 {
 private:
     KDNode<T> *root;
-    KDNode<T> *GetNode(const T &);    
+    int K;
+    KDNode<T> *GetNode(T *);
+    KDNode<T> *_Find(T *, KDNode<T> *, int);
+    void _Add(T *, KDNode<T> *, KDNode<T> *, int);
+    void _TreeDestr(KDNode<T> *);
+
+    KDNode<T> *_FindNearest(T *, KDNode<T> *, int);
+    KDNode<T> *_Closest(KDNode<T> *, KDNode<T> *, T *);
+
 public:
-    KDTree();
-    KDTree(T *);
+    KDTree(int iK) : K(iK) { root = NULL; };
+    ~KDTree();
+
+    void Add(T *);
+    KDNode<T> *FindNode(T *);
+    KDNode<T> *FindNearest(T *);
+    KDNode<T> *GetRoot();
+
+    template <T>
+    friend std::ostream &operator<<(std::ostream &, KDTree<T> &);
+
+    std::ostream &Print(std::ostream &, KDNode<T> *);
 };
 
 #endif
