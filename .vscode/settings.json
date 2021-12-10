@@ -46,6 +46,8 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "cstring": "cpp",
-        "list.h": "c"
+        "list.h": "c",
+        "list": "cpp",
+        "fstream": "cpp"
     }
 }

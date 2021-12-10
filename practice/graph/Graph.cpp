@@ -345,27 +345,26 @@ void Graph::Component(std::list<GNode *> *result)
     int isvisited[size];
     for (int i = 0; i < size; i++)
         isvisited[i] = 0;
-    std::list<GNode *>::iterator iter;
-    iter = set.begin();
-    _Component(result, iter, isvisited);
+    _Component(result, isvisited);
 }
 
-void Graph::_Component(std::list<GNode *> *result, std::list<GNode *>::iterator iter, int *isvisited)
+void Graph::_Component(std::list<GNode *> *result, int *isvisited)
 {
-    if (iter == set.end())
-        return;
-    GNode *node = *iter;
-    if (!isvisited[*node - 1])
+    std::list<GNode *>::iterator iter;
+    for (iter = set.begin(); iter != set.end(); iter++)
     {
-        GNode *newNode = CreateNode(node->GetIndex());
+        GNode *node = *iter;
+        if (!isvisited[*node - 1])
+        {
+            GNode *newNode = CreateNode(node->GetIndex());
 
-        isvisited[*newNode - 1] = 1;
-        result->push_front(newNode);
-        newNode->GetConnections()->push_front(newNode->GetIndex());
+            isvisited[*newNode - 1] = 1;
+            result->push_back(newNode);
+            newNode->GetConnections()->push_front(newNode->GetIndex());
 
-        _Component_rec(node, newNode->GetConnections(), isvisited);
+            _Component_rec(node, newNode->GetConnections(), isvisited);
+        }
     }
-    _Component(result, ++iter, isvisited);
 }
 
 void Graph::_Component_rec(GNode *root, std::list<int> *Connect, int *isvisited)
@@ -377,7 +376,7 @@ void Graph::_Component_rec(GNode *root, std::list<int> *Connect, int *isvisited)
         if (!isvisited[*iter - 1])
         {
             isvisited[*iter - 1] = 1;
-            Connect->push_front(*iter);
+            Connect->push_back(*iter);
             _Component_rec(FindNode(*iter), Connect, isvisited);
         }
 }

@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <iostream>
+#include <list>
 #include "Kdtree.h"
 
 template <class T>
@@ -192,7 +193,7 @@ KDNode<T> *KDTree<T>::_FindNearest(T *data, KDNode<T> *node, int depth)
     if (radius >= dist * dist)
     {
         temp = _FindNearest(data, next, other + 1);
-        best = _Closest(temp, node, data);
+        best = _Closest(temp, best, data);
     }
     return best;
 }
@@ -201,7 +202,7 @@ template <class T>
 KDNode<T> *KDTree<T>::_Closest(KDNode<T> *n1, KDNode<T> *n2, T *point)
 {
     if (n1 == NULL || n2 == NULL)
-        return (n1 == NULL) ? n1 : n2;
+        return (n1 == NULL) ? n2 : n1;
     T dist_1 = n1->GetDist(point, K);
     T dist_2 = n2->GetDist(point, K);
 
@@ -221,11 +222,37 @@ std::ostream &KDTree<T>::Print(std::ostream &s, KDNode<T> *node)
     if (node == NULL)
         return s;
     s << *node;
-    return Print(Print(s, node->GetLeft()), node->GetRight());;
+    return Print(Print(s, node->GetLeft()), node->GetRight());
 }
 
 template <class T>
 KDNode<T> *KDTree<T>::GetRoot()
 {
     return root;
+}
+
+template <class T>
+void KDTree<T>::FindRange(T *data_min, T *data_max, std::list<T *> *result)
+{
+    FindRange(root, 0, data_min, data_max, result);
+}
+
+template <class T>
+void KDTree<T>::_FindRange(KDNode<T> *node, int depth, T *data_min, T *data_max, std::list<T *> *result)
+{
+    if (node == NULL)
+        return;
+    if (node->GetData()[depth % K] < data_min[depth % K])
+        _FindRange(node->GetRight(), depth + 1, data_min, data_max, result);
+    else
+    {
+        if (node->GetData()[depth % K] <= data_max[depth % K])
+        {
+            _FindRange(node->GetRight(), depth + 1, data_min, data_max, result);
+            if (node->GetData()[(depth + 1) % K] <= data_max[(depth + 1) % K] &&
+                node->GetData()[(depth + 1) % K] >= data_min[(depth + 1) % K])
+                result->push_front(node->GetData());
+        }
+        _FindRange(node->GetLeft(), depth + 1, data_min, data_max, result);
+    }
 }

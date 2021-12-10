@@ -37,7 +37,7 @@ private:
     void _Cycle(int, int, int *, bool *);
     void _CycleDirect(std::list<int> *, std::list<int> *, std::list<int> *, int, bool *);
     bool _Search(std::list<int> *, int);
-    void _Component(std::list<GNode *> *, std::list<GNode *>::iterator, int *);
+    void _Component(std::list<GNode *> *, int *);
     void _Component_rec(GNode *, std::list<int> *, int *);
 
 public:

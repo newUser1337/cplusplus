@@ -1,6 +1,8 @@
 #ifndef __KDTREE_CPP__
 #define __KDTREE_CPP__
 
+#include <list>
+
 template <class T>
 class KDNode
 {
@@ -41,6 +43,7 @@ private:
 
     KDNode<T> *_FindNearest(T *, KDNode<T> *, int);
     KDNode<T> *_Closest(KDNode<T> *, KDNode<T> *, T *);
+    void _FindRange(KDNode<T> *, int, T *, T *, std::list<T*> *);
 
 public:
     KDTree(int iK) : K(iK) { root = NULL; };
@@ -55,6 +58,8 @@ public:
     friend std::ostream &operator<<(std::ostream &, KDTree<T> &);
 
     std::ostream &Print(std::ostream &, KDNode<T> *);
+
+    void FindRange(T *, T *, std::list<T*> *);
 };
 
 #endif
