@@ -3,7 +3,7 @@
 
 int main()
 {
-    Part part(7);
+    Part part(4);
 
     while (part.Next())
         part.Print();
